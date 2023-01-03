@@ -77,13 +77,31 @@ const playRound = (playerSelection, computerSelection) => {
 }
 
 const game = () => {
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt("Enter your answer");
+    const btnRock = document.querySelector(".rock");
+    const btnPaper = document.querySelector(".paper");
+    const btnScissors = document.querySelector(".scissors");
+
+    btnRock.addEventListener("click", (e) => {
+        const playerSelection = "rock";
         const computerSelection = getComputerChoice();
 
         console.log(playRound(playerSelection, computerSelection));
         console.log("\n\n");
-    }
+    });
+    btnPaper.addEventListener("click", (e) => {
+        const playerSelection = "paper";
+        const computerSelection = getComputerChoice();
+
+        console.log(playRound(playerSelection, computerSelection));
+        console.log("\n\n");
+    });
+    btnScissors.addEventListener("click", (e) => {
+        const playerSelection = "scissors";
+        const computerSelection = getComputerChoice();
+
+        console.log(playRound(playerSelection, computerSelection));
+        console.log("\n\n");
+    });
 }
 
 game();
