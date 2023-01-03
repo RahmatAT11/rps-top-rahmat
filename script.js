@@ -80,27 +80,25 @@ const game = () => {
     const btnRock = document.querySelector(".rock");
     const btnPaper = document.querySelector(".paper");
     const btnScissors = document.querySelector(".scissors");
+    const result = document.querySelector(".result");
 
     btnRock.addEventListener("click", (e) => {
         const playerSelection = "rock";
         const computerSelection = getComputerChoice();
 
-        console.log(playRound(playerSelection, computerSelection));
-        console.log("\n\n");
+        result.textContent = playRound(playerSelection, computerSelection);
     });
     btnPaper.addEventListener("click", (e) => {
         const playerSelection = "paper";
         const computerSelection = getComputerChoice();
 
-        console.log(playRound(playerSelection, computerSelection));
-        console.log("\n\n");
+        result.textContent = playRound(playerSelection, computerSelection);
     });
     btnScissors.addEventListener("click", (e) => {
         const playerSelection = "scissors";
         const computerSelection = getComputerChoice();
 
-        console.log(playRound(playerSelection, computerSelection));
-        console.log("\n\n");
+        result.textContent = playRound(playerSelection, computerSelection);
     });
 }
 
