@@ -1,3 +1,14 @@
+let playerScore = 0;
+let comScore = 0;
+let isGameOn = true;
+const btnRock = document.querySelector(".rock");
+const btnPaper = document.querySelector(".paper");
+const btnScissors = document.querySelector(".scissors");
+const result = document.querySelector(".result");
+const playerScoreDisplay = document.querySelector(".player-score");
+const comScoreDisplay = document.querySelector("com-score");
+const winnerDisplay = document.querySelector(".winner");
+
 const getRndInteger = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -17,7 +28,7 @@ const getComputerChoice = () => {
 }
 
 const playRound = (playerSelection, computerSelection) => {
-    let matchResult = ``;
+    let matchResult = {};
     let matchMessage = ``;
     let matchStatus = ``;
 
@@ -71,27 +82,66 @@ const playRound = (playerSelection, computerSelection) => {
             break;
     }
 
-    matchResult = `You ${matchStatus}! ${matchMessage}`;
+    // matchResult = `You ${matchStatus}! ${matchMessage}`;
 
+    matchResult = {matchMessage: matchMessage, matchStatus: matchStatus};
     return matchResult;
 }
 
-function getResult(result, selection) {
+function getResult(result, selection, scoreDisplay) {
     const playerSelection = selection;
     const computerSelection = getComputerChoice();
+    const matchResult = playRound(playerSelection, computerSelection);
 
-    result.textContent = playRound(playerSelection, computerSelection);
+    result.innerHTML = matchResult.matchMessage;
+
+    console.log(matchResult.matchStatus)
+
+    if (matchResult.matchStatus === "Win") {
+        playerScore += 1;
+        scoreDisplay.player.innerHTML = playerScore;
+    } else if (matchResult.matchStatus === "Lose") {
+        comScore += 1;
+        scoreDisplay.com.innerHTML = comScore;
+    }
 }
 
-const game = () => {
+function gameSetup () {
     const btnRock = document.querySelector(".rock");
     const btnPaper = document.querySelector(".paper");
     const btnScissors = document.querySelector(".scissors");
     const result = document.querySelector(".result");
+    const playerScoreDisplay = document.querySelector(".player-score");
+    const comScoreDisplay = document.querySelector(".com-score");
 
-    btnRock.addEventListener("click", () => getResult(result, "rock"));
-    btnPaper.addEventListener("click", () => getResult(result, "paper"));
-    btnScissors.addEventListener("click", () => getResult(result, "scissors"));
+    btnRock.addEventListener("click", () => getResult(result, "rock", {player: playerScoreDisplay, com: comScoreDisplay}));
+    btnPaper.addEventListener("click", () => getResult(result, "paper", {player: playerScoreDisplay, com: comScoreDisplay}));
+    btnScissors.addEventListener("click", () => getResult(result, "scissors", {player: playerScoreDisplay, com: comScoreDisplay}));
 }
 
-game();
+const game = () => {
+    const winnerDisplay = document.querySelector(".winner");
+
+    console.log(playerScore, " Player ", comScore, " Com")
+
+    if (playerScore === 5) {
+        winnerDisplay.innerHTML = "Player Win!";
+        btnRock.removeEventListener('click');
+        btnPaper.removeEventListener('click');
+        btnScissors.removeEventListener('click');
+        isGameOn = false;
+    } else if (comScore === 5) {
+        winnerDisplay.innerHTML = "Com Win!";
+        btnRock.removeEventListener('click');
+        btnPaper.removeEventListener('click');
+        btnScissors.removeEventListener('click');
+        isGameOn = false;
+    }
+}
+
+gameSetup();
+
+do {
+    game();
+    console.log("Still")
+} while (isGameOn);
