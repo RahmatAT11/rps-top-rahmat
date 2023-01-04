@@ -104,6 +104,17 @@ function getResult(result, selection, scoreDisplay) {
         comScore += 1;
         scoreDisplay.com.innerHTML = comScore;
     }
+
+    game();
+}
+
+function displayWinner(winnerName) {
+    const winnerDisplay = document.querySelector(".winner");
+    winnerDisplay.innerHTML = `${winnerName} Win!`;
+
+    btnRock.removeEventListener('click', () => getResult(result, "rock", {player: playerScoreDisplay, com: comScoreDisplay}));
+    btnPaper.removeEventListener('click', () => getResult(result, "paper", {player: playerScoreDisplay, com: comScoreDisplay}));
+    btnScissors.removeEventListener('click', () => getResult(result, "scissors", {player: playerScoreDisplay, com: comScoreDisplay}));
 }
 
 function gameSetup () {
@@ -119,29 +130,12 @@ function gameSetup () {
     btnScissors.addEventListener("click", () => getResult(result, "scissors", {player: playerScoreDisplay, com: comScoreDisplay}));
 }
 
-const game = () => {
-    const winnerDisplay = document.querySelector(".winner");
-
-    console.log(playerScore, " Player ", comScore, " Com")
-
+function game() {
     if (playerScore === 5) {
-        winnerDisplay.innerHTML = "Player Win!";
-        btnRock.removeEventListener('click');
-        btnPaper.removeEventListener('click');
-        btnScissors.removeEventListener('click');
-        isGameOn = false;
+        displayWinner("Player");
     } else if (comScore === 5) {
-        winnerDisplay.innerHTML = "Com Win!";
-        btnRock.removeEventListener('click');
-        btnPaper.removeEventListener('click');
-        btnScissors.removeEventListener('click');
-        isGameOn = false;
+        displayWinner("Com");
     }
 }
 
 gameSetup();
-
-do {
-    game();
-    console.log("Still")
-} while (isGameOn);
